@@ -1,0 +1,31 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../user/js/jquery.min.js"></script>
+  <script src="../user/js/popper.min.js"></script>
+  <script src="../user/js/moment.min.js"></script>
+  <script src="../user/js/bootstrap.min.js"></script>
+  <script src="../user/js/simplebar.min.js"></script>
+  <script src='../user/js/daterangepicker.js'></script>
+  <script src='../user/js/jquery.stickOnScroll.js'></script>
+  <script src="../user/js/tinycolor-min.js"></script>
+  <script src="../user/js/d3.min.js"></script>
+  <script src="../user/js/topojson.min.js"></script>
+  <script src="../user/js/Chart.min.js"></script>
+  <script src="../user/js/gauge.min.js"></script>
+  <script src="../user/js/jquery.sparkline.min.js"></script>
+  <script src="../user/js/apexcharts.min.js"></script>
+  <script src="../user/js/apexcharts.custom.js"></script>
+  <script src='../user/js/jquery.mask.min.js'></script>
+  <script src='../user/js/select2.min.js'></script>
+  <script src='../user/js/jquery.steps.min.js'></script>
+  <script src='../user/js/jquery.validate.min.js'></script>
+  <script src='../user/js/jquery.timepicker.js'></script>
+  <script src='../user/js/dropzone.min.js'></script>
+  <script src='../user/js/uppy.min.js'></script>
+  <script src='../user/js/quill.min.js'></script>
+  <script src="../user/js/apps.js"></script>
+  <script src="../user/js/preloader.js"></script>
+  <script src="../user/js/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <script src="../user/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src='../user/js/jquery.dataTables.min.js'></script>
+  <script src='../user/js/dataTables.bootstrap4.min.js'></script>
+  <script src='../user/js/email.val.js'></script>

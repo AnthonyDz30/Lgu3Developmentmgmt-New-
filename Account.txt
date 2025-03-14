@@ -1,0 +1,11 @@
+Admin Account:
+Email: admin@gmail.com
+Password: admin123
+
+Employee Account:
+Email: Anthony@gmail.com
+Password: anthony123
+
+User Account:
+Email: dexterlucero@gmail.com
+Password: dexter123
