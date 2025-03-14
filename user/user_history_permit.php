@@ -1,10 +1,11 @@
-<?php 
+<?php  
 include('../user/assets/config/dbconn.php');
 ?> 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>History List</title>
     <?php include('../user/inc/header.php'); ?>
 </head>
 <body class="vertical light">
@@ -32,11 +33,13 @@ include('../user/assets/config/dbconn.php');
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">First Name</th>
+                                        <th scope="col">Middle Name</th>
                                         <th scope="col">Last Name</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Number</th>
-                                        <th scope="col">Address of Applicant</th>
-                                        <th scope="col">Name of the Owner</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">ZIP</th>
+                                        <th scope="col">Lot Location</th>
                                         <th scope="col">Lot Area</th>
                                         <th scope="col">Date of Application</th>
                                         <th scope="col">Period of Date</th>
@@ -44,43 +47,46 @@ include('../user/assets/config/dbconn.php');
                                     </tr>
                                 </thead>
                                 <tbody id="displayDataTable">
-                                    <!-- Data will be loaded here from AJAX -->
+                                    <?php
+                                    // Fetch Data from Database
+                                    $query = "SELECT * FROM registration"; // Replace with your actual table name
+                                    $result = mysqli_query($conn, $query);
+
+                                    if (!$result) {
+                                        die("SQL Error: " . mysqli_error($conn));
+                                    }
+
+                                    $number = 1;
+                                    while ($row = mysqli_fetch_assoc($result)) { 
+                                        echo "<tr>
+                                                <td>{$number}</td>
+                                                <td>" . htmlspecialchars($row['fname']) . "</td>
+                                                <td>" . htmlspecialchars($row['mname']) . "</td>
+                                                <td>" . htmlspecialchars($row['lname']) . "</td>
+                                                <td>" . htmlspecialchars($row['email']) . "</td>
+                                                <td>" . htmlspecialchars($row['phone']) . "</td>
+                                                <td>" . htmlspecialchars($row['address']) . "</td>
+                                                <td>" . htmlspecialchars($row['zip']) . "</td>
+                                                <td>" . htmlspecialchars($row['loc_lot']) . "</td>
+                                                <td>" . htmlspecialchars($row['lot_area']) . "</td>
+                                                <td>" . htmlspecialchars($row['date_application']) . "</td>
+                                                <td>" . htmlspecialchars($row['period_date']) . "</td>
+                                                <td>
+                                                    <form method='POST' action='delete_user.php'>
+                                                        <input type='hidden' name='delete_id' value='" . $row['id'] . "'>
+                                                        <button type='submit' class='btn btn-danger'>Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>";
+                                        $number++;
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <script>
-                $(document).ready(function() {
-                    displayData();
-                });
-
-                function displayData() {
-                    $.ajax({
-                        url: "user_history_permit_list_displaydata.php",
-                        type: 'POST',
-                        data: { displaysend: "true" },
-                        success: function(data) {
-                            $('#displayDataTable').html(data);
-                        }
-                    });
-                }
-
-                function deleteUser(deleteId) {
-                    if (confirm("Are you sure you want to delete this record?")) {
-                        $.ajax({
-                            url: "user_history_permit_list_delete.php",
-                            type: 'POST',
-                            data: { deletesend: deleteId },
-                            success: function(response) {
-                                displayData();
-                            }
-                        });
-                    }
-                }
-            </script>
 
         </main>
     </div>

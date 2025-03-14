@@ -1,74 +1,39 @@
-<?php 
-    include('../user/assets/config/dbconn.php');
-    include('../user/inc/header.php');
-    include('../user/inc/navbar.php');
-    include('../user/inc/sidebar.php');
+<?php
+include('../user/assets/config/dbconn.php');
 
-    if(isset($_POST['displaysend']))
-    {
-        $table = '<table class="table table-bordered">
-                    <thead>
-                        <tr>
-                         <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Number</th>
-                            <th scope="col">Address of Applicant</th>
-                            <th scope="col">Name of the Owner</th>
-                            <th scope="col">Lot area</th>
-                            <th scope="col">Date of Application</th>
-                            <th scope="col">Period of Date</th>
-                            <th scope="col">Action</th>
-                         
-                        </tr>
-                    </thead>';
+if (!isset($_POST['displaysend'])) {
+    die("No data received.");
+}
 
-        $sql = "SELECT * FROM registration";
-        $result = mysqli_query($conn, $sql);
-        $number = 1;
-        while ($row = mysqli_fetch_assoc($result))
-        {
-            $id = $row['id'];
-            $fname = $row['fname'];
-            $lname = $row['lname'];
-            $email = $row['email'];
-            $phone = $row['phone'];
-            $address = $row['address'];
-            $name_owner = $row['name_owner'];
-            $lot_area = $row['lot_area'];
-            $date_application = $row['date_application'];
-            $period_date = $row['period_date'];
+$query = "SELECT * FROM registration"; // Replace with actual table name
+$result = mysqli_query($conn, $query);
 
-            $table.='<tr>
-                        <td scope="row">'.$number.'</td>
-                        <td>'.$fname.'</td>
-                        <td>'.$lname.'</td>
-                        <td>'.$email.'</td>
-                        <td>'.$phone.'</td>
-                        <td>'.$address.'</td>
-                        <td>'.$name_owner.'</td>
-                        <td>'.$lot_area.'</td>
-                        <td>'.$date_application.'</td>
-                        <td>'.$period_date.'</td>
-                        <td>
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Pending
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button class="btn btn-dark dropdown-item" onclick="getdetails('.$id.')"><i class="fa-sharp fa-solid fa-pen-to-square icon"></i>Update</button></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><button class="btn btn-danger dropdown-item" onclick="deleteuser('.$id.')"><i class="fa-solid fa-trash icon"></i> Delete</button></li>
-                            </ul>
-                            
-                        </td>
-                        </td>                       
-                    </tr>';
-                    $number++;
-        }
-        $table.='</table>';
-        echo $table;
-    }
+if (!$result) {
+    die("SQL Error: " . mysqli_error($conn));
+}
+
+$number = 1;
+while ($row = mysqli_fetch_assoc($result)) { 
+    echo "<tr>
+            <td>{$number}</td>
+            <td>" . htmlspecialchars($row['fname']) . "</td>
+            <td>" . htmlspecialchars($row['mname']) . "</td>
+            <td>" . htmlspecialchars($row['lname']) . "</td>
+            <td>" . htmlspecialchars($row['email']) . "</td>
+            <td>" . htmlspecialchars($row['phone']) . "</td>
+            <td>" . htmlspecialchars($row['address']) . "</td>
+            <td>" . htmlspecialchars($row['zip']) . "</td>
+            <td>" . htmlspecialchars($row['loc_lot']) . "</td>
+            <td>" . htmlspecialchars($row['lot_area']) . "</td>
+            <td>" . htmlspecialchars($row['date_application']) . "</td>
+            <td>" . htmlspecialchars($row['period_date']) . "</td>
+            <td>
+                <form method='POST' action='delete_user.php'>
+                    <input type='hidden' name='delete_id' value='" . $row['id'] . "'>
+                    <button type='submit' class='btn btn-danger'>Delete</button>
+                </form>
+            </td>
+          </tr>";
+    $number++;
+}
 ?>
-
-    
