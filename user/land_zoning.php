@@ -1,13 +1,22 @@
 <?php 
 include('../user/assets/config/dbconn.php');
-
 ?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include('../user/inc/header.php');
     ?>
+    <title>Interactive Zoning Map</title>
     
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="main.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    <!-- JavaScript files -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/map.js" defer></script>
 </head>
     
     <div class="loader-mask">
@@ -35,64 +44,43 @@ include('../user/assets/config/dbconn.php');
         ?>
 
 <!--YOUR CONTENT HERE-->
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoning Map</title>
-    <!-- Include Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <style>
-        #map {
-            height: 600px;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <h1>Zoning Map</h1>
+<h1>Interactive Zoning Map</h1>
+    
+    <!-- Map Container -->
     <div id="map"></div>
 
-    <!-- Include Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-choropleth@1.0.0/dist/leaflet-choropleth.js"></script>
-
     <script>
+        // Pass PHP data to JavaScript using inline script
+        var zoningData = <?php echo $zoningData; ?>;
+
         // Initialize the map
-        const map = L.map('map').setView([ 14.72979,121.03874 ], 12); // Default coordinates (e.g., San Francisco)
+        var map = L.map('map').setView([14.7250, 121.0326], 15);  // Coordinates for your data location (adjust if needed)
 
-        // Set the tile layer (open street maps)
+        // Tile Layer (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3707.9690249948676!2d121.03612297492653!3d14.72957538577215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b0542d0ccaf1%3A0x54be2536d53a48e8!2sSan%20Agustin%20Barangay%20Hall!5e1!3m2!1sen!2sph!4v1741947883278!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Add a GeoJSON layer (replace this with your own zoning data)
-        const zoningData = {mapgeoJSON};
-
-        // Style function for the zoning areas
-        const style = (feature) => {
-            return {
-                fillColor: feature.properties.color, // Use color from the GeoJSON properties
-                weight: 2,
-                opacity: 1,
-                color: 'black',
-                dashArray: '3',
-                fillOpacity: "#ff7afb"
-            };
-        };
-
-        // Popup content function to display zoning info
-        const onEachFeature = (feature, layer) => {
-            if (feature.properties && feature.properties.name) {
-                layer.bindPopup(`<h3>${feature.properties.name}</h3><p>${feature.properties.description || 'No description available.'}</p>`);
-            }
-        };
-
-        // Add the GeoJSON layer to the map with styles and popups
+        // Load zoning data from the PHP variable (converted to JSON)
         L.geoJSON(zoningData, {
-            style: style,
-            onEachFeature: onEachFeature
+            style: function (feature) {
+                return {
+                    color: feature.properties.fill || "#3388ff",  // Default color if "fill" property is empty
+                    weight: 2,
+                    opacity: 0.7,
+                    fillOpacity: 0.5
+                };
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties.Note) {
+                    layer.bindPopup("<strong>Note:</strong> " + feature.properties.Note);
+                }
+            }
         }).addTo(map);
-
     </script>
+
+
+    
     <!-- Include jQuery (once) -->
     <?php 
 include('../user/inc/footer.php');

@@ -9295,7 +9295,7 @@ form.was-validated select:valid ~ .select2-container--bootstrap4 .select2-select
   overflow: hidden; }
 
 .uppy-u-reset {
-  -webkit-appearance: none;
+  -webkit-appearanc: none;
   line-height: 1;
   padding: 0;
   margin: 0;
@@ -11334,7 +11334,7 @@ svg.UppyIcon.retry {
 
 .uppy-DashboardContent-back {
   background: none;
-  /-webkit-appearance: none;
+  -webkit-appearanc: none;
   font-family: inherit;
   font-size: inherit;
   line-height: 1;
@@ -11359,7 +11359,7 @@ svg.UppyIcon.retry {
 
 .uppy-DashboardContent-addMore {
   background: none;
-  /*-webkit-appearance: none;*/
+  -webkit-appearanc: none;
   font-family: inherit;
   font-size: inherit;
   line-height: 1;
@@ -12153,7 +12153,7 @@ body.dark-mode .box-wrapper{
   padding-top: 20px;
 }
 
-</*----Permit----*/>
+/*----Permit----*/
 @media (min-width: 768px) {
   .col-md-2 {
       -ms-flex: 0 0 16.666667%;
