@@ -46,7 +46,7 @@ include('../user/assets/config/dbconn.php');
                 <div class="col-md-12">
 
                 <div class="image-container">
-                <img class="stretched" src="images/.jpg" alt="Stretched Image">
+                <img class="stretched" src="images/page.jpg" alt="Stretched Image">
 
                 </div>
                 <div class="card__container">
